@@ -11,10 +11,10 @@ class App extends HookConsumerWidget {
     final appRouter = ref.watch(AppRouter.provider);
 
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: 'Loan Calculator',
       routerConfig: appRouter.router,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
     );

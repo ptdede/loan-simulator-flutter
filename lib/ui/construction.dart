@@ -8,8 +8,12 @@ class Construction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
-        child: Text('$pageName Screen Under Construction'),
+        child: Text(
+          '$pageName Screen Under Construction',
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
   }

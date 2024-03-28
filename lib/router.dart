@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loan_simulator/screens/login_screen.dart';
@@ -13,7 +14,7 @@ class AppRouter {
   static const register = '/register';
   static const homepage = '/homepage';
   static const simulation = '/simulation';
-  static const simulationDetail = '/simulation/detail';
+  static const simulationDetail = '/simulation/detail/:id';
   static const profile = '/profile';
 
   static final provider = Provider((ref) => AppRouter());
@@ -26,14 +27,19 @@ class AppRouter {
         path: splash,
         builder: (context, state) {
           return SplashScreen(
-            onRedirect: () => context.replaceNamed(homepage),
+            onRedirect: () => context.replaceNamed(login),
           );
         },
       ),
       GoRoute(
         name: login,
         path: login,
-        builder: (context, state) => const LoginScreen(),
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: const LoginScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child),
+        ),
       ),
       GoRoute(
         name: register,
@@ -43,8 +49,13 @@ class AppRouter {
       GoRoute(
         name: homepage,
         path: homepage,
-        builder: (context, state) => const GenerateBottombar(
-          currentTab: TopLevelBottombarTab.home,
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: const GenerateBottombar(
+            currentTab: TopLevelBottombarTab.home,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child),
         ),
       ),
       GoRoute(

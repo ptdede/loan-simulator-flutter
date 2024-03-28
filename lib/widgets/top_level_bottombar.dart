@@ -8,8 +8,8 @@ import 'package:loan_simulator/screens/homepage/homepage_screen.dart';
 import 'package:loan_simulator/screens/profile/profile_screen.dart';
 
 enum TopLevelBottombarTab {
-  home(icon: Icons.home, title: 'Home'),
-  profile(icon: Icons.person, title: 'Profile');
+  home(icon: Icons.home, title: 'home'),
+  profile(icon: Icons.person, title: 'profile');
 
   const TopLevelBottombarTab({required this.icon, required this.title});
 
@@ -34,6 +34,9 @@ class TopLevelBottombar extends HookWidget {
     return Scaffold(
       floatingActionButton: IconButton.filled(
         iconSize: 48,
+        color: Colors.white,
+        highlightColor: Colors.black,
+        focusColor: Colors.black,
         onPressed: () {
           context.pushNamed(AppRouter.simulation);
         },
@@ -44,42 +47,58 @@ class TopLevelBottombar extends HookWidget {
         children: children,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: SafeArea(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ...TopLevelBottombarTab.values.mapIndexed(
-              (index, tab) {
-                final isActive = selectedIndex.value == index;
+      bottomNavigationBar: Material(
+        color: Colors.white,
+        shape: const Border(
+          top: BorderSide(
+            width: 1,
+            color: Colors.black26,
+          ),
+        ),
+        child: SafeArea(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ...TopLevelBottombarTab.values.mapIndexed(
+                (index, tab) {
+                  final isActive = selectedIndex.value == index;
+                  final themeColor = Theme.of(context);
 
-                return InkWell(
-                  onTap: () {
-                    selectedIndex.value = index;
-                  },
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          tab.icon,
-                          color: isActive ? Colors.blue : Colors.black,
-                        ),
-                        Text(
-                          tab.title,
-                          style: TextStyle(
-                            color: isActive ? Colors.blue : Colors.black,
+                  return InkWell(
+                    onTap: () {
+                      selectedIndex.value = index;
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            tab.icon,
+                            size: 28,
+                            color: isActive
+                                ? themeColor.primaryColor
+                                : Colors.black54,
                           ),
-                        ),
-                      ],
+                          Text(
+                            tab.title,
+                            style: TextStyle(
+                              color: isActive
+                                  ? themeColor.primaryColor
+                                  : Colors.black54,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -97,6 +116,7 @@ class GenerateBottombar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TopLevelBottombar(
+      key: key,
       currentIndex: currentTabIndex,
       children: TopLevelBottombarTab.values.map((tab) {
         switch (tab) {
