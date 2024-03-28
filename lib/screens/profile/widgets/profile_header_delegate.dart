@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loan_simulator/data/models/user_data.dart';
 
 class ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
   ProfileHeaderDelegate({
     required this.userData,
+    required this.vsync,
     required this.collapsedHeight,
     required this.expandedHeight,
   });
@@ -15,6 +17,9 @@ class ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
   final AsyncValue<UserData?> userData;
   final double collapsedHeight;
   final double expandedHeight;
+
+  @override
+  final TickerProvider vsync;
 
   @override
   double get maxExtent => expandedHeight;
@@ -26,6 +31,13 @@ class ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(_) => true;
 
   @override
+  FloatingHeaderSnapConfiguration? get snapConfiguration =>
+      FloatingHeaderSnapConfiguration(
+        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 200),
+      );
+
+  @override
   Widget build(
     BuildContext context,
     double shrinkOffset,
@@ -35,6 +47,9 @@ class ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
 
     return Material(
       color: Colors.white,
+      shape: const Border(
+        bottom: BorderSide(width: 1, color: Colors.black12),
+      ),
       child: SafeArea(
         child: userData.when(
           data: (data) => data != null
@@ -59,12 +74,14 @@ class ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Stack(
+        alignment: Alignment.center,
         children: [
           AnimatedPositioned(
             top: 0,
             left: lerpDouble(
                 MediaQuery.of(context).size.width / 2 - 88, 0, scrollProgress),
             duration: Duration.zero,
+            curve: Curves.linear,
             child: CachedNetworkImage(
               imageUrl: user.avatar ?? '',
               placeholder: (context, url) => const CircularProgressIndicator(),
@@ -87,27 +104,19 @@ class ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
               ),
             ),
           ),
-          AnimatedAlign(
-            alignment: Alignment.lerp(
-              Alignment.center,
-              Alignment.centerRight,
-              scrollProgress,
-            )!,
+          AnimatedPositioned(
             duration: Duration.zero,
-            child: AnimatedPositioned(
-              duration: Duration.zero,
-              top: lerpDouble(140, 0, scrollProgress),
-              child: Column(
-                children: [
-                  const SizedBox(height: 12),
-                  Text('${user.firstName} ${user.lastName}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                      )),
-                  if (user.email != null) Text(user.email!),
-                ],
-              ),
+            top: lerpDouble(140, 0, scrollProgress),
+            child: Column(
+              children: [
+                const SizedBox(height: 12),
+                Text('${user.firstName} ${user.lastName}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                    )),
+                if (user.email != null) Text(user.email!),
+              ],
             ),
           ),
         ],
