@@ -45,7 +45,6 @@ class ProfileController extends StateNotifier<ProfileControllerState> {
       state = state.copyWith(currentUser: AsyncData(result.asData?.value.data));
     }
 
-    // TODO: handle error
     if (result is AsyncError) {
       state =
           state.copyWith(currentUser: AsyncError(result, StackTrace.current));

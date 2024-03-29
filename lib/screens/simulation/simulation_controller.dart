@@ -33,7 +33,6 @@ class SimulationController extends StateNotifier<SimulationControllerState> {
       state = state.copyWith(userList: result);
     }
 
-    // TODO: handle error
     if (result is AsyncError) {
       state = state.copyWith(userList: AsyncError(result, StackTrace.current));
     }

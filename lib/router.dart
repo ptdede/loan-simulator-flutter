@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loan_simulator/screens/auth/login_screen.dart';
 import 'package:loan_simulator/screens/auth/register_screen.dart';
-import 'package:loan_simulator/screens/simulation_detail_screen.dart';
+import 'package:loan_simulator/screens/simulation_detail/simulation_detail_screen.dart';
 import 'package:loan_simulator/screens/simulation/simulation_screen.dart';
 import 'package:loan_simulator/screens/splash_screen.dart';
 import 'package:loan_simulator/widgets/top_level_bottombar.dart';
@@ -72,12 +72,19 @@ class AppRouter {
       GoRoute(
         name: simulation,
         path: simulation,
-        builder: (context, state) => const SimulationScreen(),
+        builder: (context, state) => SimulationScreen(
+          onRedirectToSimulationDetail: (id) {
+            context.pushNamed(simulationDetail, pathParameters: {'id': id});
+          },
+        ),
       ),
       GoRoute(
         name: simulationDetail,
         path: simulationDetail,
-        builder: (context, state) => const SimulationDetailScreen(),
+        builder: (context, state) {
+          final userId = state.pathParameters['id']!;
+          return SimulationDetailScreen(userId: userId);
+        },
       ),
       GoRoute(
         name: profile,

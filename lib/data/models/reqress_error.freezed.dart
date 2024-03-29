@@ -20,7 +20,10 @@ ReqressError _$ReqressErrorFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ReqressError {
+  @JsonKey(name: 'error')
   String? get error => throw _privateConstructorUsedError;
+  @JsonKey(name: 'Message')
+  String? get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +37,9 @@ abstract class $ReqressErrorCopyWith<$Res> {
           ReqressError value, $Res Function(ReqressError) then) =
       _$ReqressErrorCopyWithImpl<$Res, ReqressError>;
   @useResult
-  $Res call({String? error});
+  $Res call(
+      {@JsonKey(name: 'error') String? error,
+      @JsonKey(name: 'Message') String? message});
 }
 
 /// @nodoc
@@ -51,11 +56,16 @@ class _$ReqressErrorCopyWithImpl<$Res, $Val extends ReqressError>
   @override
   $Res call({
     Object? error = freezed,
+    Object? message = freezed,
   }) {
     return _then(_value.copyWith(
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -69,7 +79,9 @@ abstract class _$$ReqressErrorImplCopyWith<$Res>
       __$$ReqressErrorImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? error});
+  $Res call(
+      {@JsonKey(name: 'error') String? error,
+      @JsonKey(name: 'Message') String? message});
 }
 
 /// @nodoc
@@ -84,31 +96,41 @@ class __$$ReqressErrorImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? error = freezed,
+    Object? message = freezed,
   }) {
     return _then(_$ReqressErrorImpl(
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class _$ReqressErrorImpl implements _ReqressError {
-  const _$ReqressErrorImpl({this.error});
+  const _$ReqressErrorImpl(
+      {@JsonKey(name: 'error') this.error,
+      @JsonKey(name: 'Message') this.message});
 
   factory _$ReqressErrorImpl.fromJson(Map<String, dynamic> json) =>
       _$$ReqressErrorImplFromJson(json);
 
   @override
+  @JsonKey(name: 'error')
   final String? error;
+  @override
+  @JsonKey(name: 'Message')
+  final String? message;
 
   @override
   String toString() {
-    return 'ReqressError(error: $error)';
+    return 'ReqressError(error: $error, message: $message)';
   }
 
   @override
@@ -116,12 +138,13 @@ class _$ReqressErrorImpl implements _ReqressError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ReqressErrorImpl &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode => Object.hash(runtimeType, error, message);
 
   @JsonKey(ignore: true)
   @override
@@ -138,13 +161,19 @@ class _$ReqressErrorImpl implements _ReqressError {
 }
 
 abstract class _ReqressError implements ReqressError {
-  const factory _ReqressError({final String? error}) = _$ReqressErrorImpl;
+  const factory _ReqressError(
+      {@JsonKey(name: 'error') final String? error,
+      @JsonKey(name: 'Message') final String? message}) = _$ReqressErrorImpl;
 
   factory _ReqressError.fromJson(Map<String, dynamic> json) =
       _$ReqressErrorImpl.fromJson;
 
   @override
+  @JsonKey(name: 'error')
   String? get error;
+  @override
+  @JsonKey(name: 'Message')
+  String? get message;
   @override
   @JsonKey(ignore: true)
   _$$ReqressErrorImplCopyWith<_$ReqressErrorImpl> get copyWith =>

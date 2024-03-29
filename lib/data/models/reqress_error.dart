@@ -5,9 +5,9 @@ part 'reqress_error.g.dart';
 
 @freezed
 class ReqressError with _$ReqressError {
-  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory ReqressError({
-    String? error,
+    @JsonKey(name: 'error') String? error,
+    @JsonKey(name: 'Message') String? message,
   }) = _ReqressError;
 
   factory ReqressError.fromJson(Map<String, Object?> json) =>

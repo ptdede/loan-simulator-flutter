@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class LcTextField extends HookWidget {
@@ -12,6 +13,7 @@ class LcTextField extends HookWidget {
     this.controller,
     this.validator,
     this.onChanged,
+    this.inputFormatters,
     this.autocorrect = true,
     this.enableSuggestions = true,
     this.obscureText = false,
@@ -27,9 +29,26 @@ class LcTextField extends HookWidget {
     this.controller,
     this.validator,
     this.onChanged,
+    this.inputFormatters,
     this.autocorrect = false,
     this.enableSuggestions = false,
     this.obscureText = true,
+  });
+
+  const LcTextField.number({
+    super.key,
+    this.label,
+    this.placeholder,
+    this.leading,
+    this.trailing,
+    this.inputType,
+    this.controller,
+    this.validator,
+    this.onChanged,
+    this.inputFormatters,
+    this.autocorrect = false,
+    this.enableSuggestions = false,
+    this.obscureText = false,
   });
 
   final String? label;
@@ -43,6 +62,7 @@ class LcTextField extends HookWidget {
   final bool obscureText;
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +85,7 @@ class LcTextField extends HookWidget {
               Expanded(
                 child: TextFormField(
                   validator: validator,
+                  inputFormatters: inputFormatters,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(

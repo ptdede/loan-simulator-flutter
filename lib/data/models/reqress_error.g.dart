@@ -9,9 +9,11 @@ part of 'reqress_error.dart';
 _$ReqressErrorImpl _$$ReqressErrorImplFromJson(Map<String, dynamic> json) =>
     _$ReqressErrorImpl(
       error: json['error'] as String?,
+      message: json['Message'] as String?,
     );
 
 Map<String, dynamic> _$$ReqressErrorImplToJson(_$ReqressErrorImpl instance) =>
     <String, dynamic>{
       'error': instance.error,
+      'Message': instance.message,
     };

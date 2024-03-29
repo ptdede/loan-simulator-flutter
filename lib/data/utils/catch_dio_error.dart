@@ -16,7 +16,10 @@ Future<Response<T>> catchDioError<T>(
       case DioExceptionType.badResponse:
         throw NetworkExpection(
             code: HttpStatus.badRequest,
-            message: errorResponse.error ?? e.message ?? 'bad request');
+            message: errorResponse.error ??
+                errorResponse.message ??
+                e.message ??
+                'bad request');
       case DioExceptionType.connectionError:
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.receiveTimeout:
@@ -28,7 +31,10 @@ Future<Response<T>> catchDioError<T>(
       case DioExceptionType.unknown:
       default:
         throw NetworkExpection(
-            code: 1001, message: errorResponse.error ?? 'unknown error');
+            code: 1001,
+            message: errorResponse.error ??
+                errorResponse.message ??
+                'unknown error');
     }
   } catch (e) {
     throw NetworkExpection(code: 1001, message: e.toString());
