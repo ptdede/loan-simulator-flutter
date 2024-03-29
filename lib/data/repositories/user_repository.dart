@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loan_simulator/data/models/login_response.dart';
+import 'package:loan_simulator/data/models/register_response.dart';
 import 'package:loan_simulator/data/models/user_list_response.dart';
 import 'package:loan_simulator/data/models/user_single_response.dart';
 import 'package:loan_simulator/data/services/user_service.dart';
@@ -26,7 +28,31 @@ class UserRepository {
     return UserSingleResponse.fromJson(result);
   }
 
-  void register() {}
+  Future<RegisterResponse> register({
+    required String email,
+    required String password,
+  }) async {
+    final result = await _userService.post<Map<String, dynamic>>(
+      path: '/api/register',
+      body: {
+        'email': email,
+        'password': password,
+      },
+    );
+    return RegisterResponse.fromJson(result);
+  }
 
-  void login() {}
+  Future<LoginResponse> login({
+    required String email,
+    required String password,
+  }) async {
+    final result = await _userService.post<Map<String, dynamic>>(
+      path: '/api/login',
+      body: {
+        'email': email,
+        'password': password,
+      },
+    );
+    return LoginResponse.fromJson(result);
+  }
 }

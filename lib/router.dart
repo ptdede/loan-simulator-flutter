@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loan_simulator/screens/login_screen.dart';
-import 'package:loan_simulator/screens/register_screen.dart';
+import 'package:loan_simulator/screens/auth/login_screen.dart';
+import 'package:loan_simulator/screens/auth/register_screen.dart';
 import 'package:loan_simulator/screens/simulation_detail_screen.dart';
 import 'package:loan_simulator/screens/simulation/simulation_screen.dart';
 import 'package:loan_simulator/screens/splash_screen.dart';
@@ -27,7 +27,7 @@ class AppRouter {
         path: splash,
         builder: (context, state) {
           return SplashScreen(
-            onRedirect: () => context.replaceNamed(login),
+            onRedirect: () => context.pushReplacementNamed(login),
           );
         },
       ),
@@ -36,7 +36,10 @@ class AppRouter {
         path: login,
         pageBuilder: (context, state) => CustomTransitionPage<void>(
           key: state.pageKey,
-          child: const LoginScreen(),
+          child: LoginScreen(
+            onLoginSucceed: () => context.pushReplacementNamed(homepage),
+            onRedirectToSignup: () => context.pushReplacementNamed(register),
+          ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
               FadeTransition(opacity: animation, child: child),
         ),
@@ -44,7 +47,15 @@ class AppRouter {
       GoRoute(
         name: register,
         path: register,
-        builder: (context, state) => const RegisterScreen(),
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: RegisterScreen(
+            onRegisterSucceed: () => context.pushReplacementNamed(homepage),
+            onRedirectToSignin: () => context.pushReplacementNamed(login),
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child),
+        ),
       ),
       GoRoute(
         name: homepage,

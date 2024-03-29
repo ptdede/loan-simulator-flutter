@@ -32,7 +32,7 @@ class SplashScreen extends HookWidget {
         }
       });
       return null;
-    }, []);
+    }, [animController]);
 
     return Scaffold(
       body: Material(

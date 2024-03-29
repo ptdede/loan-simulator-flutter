@@ -4,5 +4,5 @@ class AppConfig {
   static final String simulationApi = dotenv.get('SIMULATION_API');
   static final String userApi = dotenv.get('USER_API');
   static final bool isProd = dotenv.maybeGet('ENVIRONMENT') == 'prod';
-  static final int tempUserId = int.tryParse(dotenv.get('TEMP_USER_ID')) ?? 2;
+  static final int tempUserId = int.tryParse(dotenv.get('TEMP_USER_ID')) ?? 4;
 }
