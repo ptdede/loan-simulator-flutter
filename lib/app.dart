@@ -14,11 +14,11 @@ class App extends HookConsumerWidget {
       title: 'Loan Calculator',
       routerConfig: appRouter.router,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.green,
             foregroundColor: Colors.white,
           ),
         ),

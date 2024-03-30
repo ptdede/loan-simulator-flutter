@@ -10,6 +10,7 @@ import 'package:loan_simulator/utils/thousands_formatter.dart';
 import 'package:loan_simulator/widgets/description_row.dart';
 import 'package:loan_simulator/widgets/lc_button.dart';
 import 'package:loan_simulator/widgets/lc_dropdown_button.dart';
+import 'package:loan_simulator/widgets/lc_shimmer.dart';
 import 'package:loan_simulator/widgets/lc_text_field.dart';
 
 class SimulationDetailScreen extends HookConsumerWidget {
@@ -36,11 +37,14 @@ class SimulationDetailScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
         title: const Text(
           'Loan Simulation',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
+            color: Colors.white,
           ),
         ),
       ),
@@ -106,7 +110,7 @@ class SimulationDetailScreen extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Material(
-                color: Colors.black,
+                color: Colors.greenAccent,
                 child: InkWell(
                   onTap: () {
                     isFormExpanded.value = !isFormExpanded.value;
@@ -120,7 +124,7 @@ class SimulationDetailScreen extends HookConsumerWidget {
                           child: Text(
                             'Loan Form',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
@@ -131,7 +135,7 @@ class SimulationDetailScreen extends HookConsumerWidget {
                           duration: const Duration(milliseconds: 300),
                           child: const Icon(
                             Icons.arrow_upward,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -328,7 +332,13 @@ class SimulationDetailScreen extends HookConsumerWidget {
             );
           },
           error: (error, stackTrace) => const SizedBox.shrink(),
-          loading: () => const SizedBox.shrink(),
+          loading: () => const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 12,
+            ),
+            child: LcShimmer(height: 80),
+          ),
         );
       },
     );
@@ -342,6 +352,10 @@ class SimulationDetailScreen extends HookConsumerWidget {
               .select((value) => value.simulationResult),
         );
 
+        if (simulationResult == null) {
+          return const SizedBox.shrink();
+        }
+
         return simulationResult.when(
           data: (simulation) {
             return _buildContainer(
@@ -353,7 +367,7 @@ class SimulationDetailScreen extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Material(
-                    color: Colors.black,
+                    color: Colors.greenAccent,
                     child: Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -363,7 +377,7 @@ class SimulationDetailScreen extends HookConsumerWidget {
                             child: Text(
                               'Calculation Result',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -372,44 +386,76 @@ class SimulationDetailScreen extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Wrap(
-                          direction: Axis.vertical,
-                          spacing: 12,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
                           children: [
-                            DescriptionRow(
-                              title: 'Plafond',
-                              description: '${simulation.plafond}',
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: DescriptionRow(
+                                    title: 'Plafond',
+                                    description: 'Rp ${simulation.plafond}',
+                                  ),
+                                ),
+                                Expanded(
+                                  child: DescriptionRow(
+                                    title: 'Angsuran Pokok',
+                                    description:
+                                        'Rp ${simulation.angsuranPokok}',
+                                  ),
+                                ),
+                              ],
                             ),
-                            DescriptionRow(
-                              title: 'Angsuran Pokok',
-                              description: '${simulation.angsuranPokok}',
-                            ),
-                            DescriptionRow(
-                              title: 'Angsuran Bunga',
-                              description: '${simulation.angsuranBunga}',
-                            ),
-                            DescriptionRow(
-                              title: 'Total Angsuran',
-                              description: '${simulation.totalAngsuran}',
+                            const SizedBox(height: 24),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: DescriptionRow(
+                                    title: 'Angsuran Bunga',
+                                    description:
+                                        'Rp ${simulation.angsuranBunga}',
+                                  ),
+                                ),
+                                Expanded(
+                                  child: DescriptionRow(
+                                    title: 'Total Angsuran',
+                                    description:
+                                        'Rp ${simulation.totalAngsuran}',
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
-                        _buildTable(simulation.tabelAngsuran),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 8),
+                      _buildTable(simulation.tabelAngsuran),
+                    ],
                   ),
                 ],
               ),
             );
           },
           error: (error, stackTrace) => const SizedBox.shrink(),
-          loading: () => const SizedBox.shrink(),
+          loading: () => const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 12,
+            ),
+            child: Column(
+              children: [
+                LcShimmer(height: 80),
+                SizedBox(height: 12),
+                LcShimmer(height: 20),
+                SizedBox(height: 12),
+                LcShimmer(height: 20),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -424,8 +470,8 @@ class SimulationDetailScreen extends HookConsumerWidget {
             _buildTableCell(
               content: 'Bulan',
               width: 50,
-              color: Colors.black,
-              textColor: Colors.white,
+              color: Colors.greenAccent,
+              textColor: Colors.black,
               textAlign: TextAlign.center,
               padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
             ),
@@ -454,26 +500,26 @@ class SimulationDetailScreen extends HookConsumerWidget {
                   children: [
                     _buildTableCell(
                       content: 'Sisa',
-                      color: Colors.black,
-                      textColor: Colors.white,
+                      color: Colors.greenAccent,
+                      textColor: Colors.black,
                       width: _cellWidth,
                     ),
                     _buildTableCell(
                       content: 'Pokok',
-                      color: Colors.black,
-                      textColor: Colors.white,
+                      color: Colors.greenAccent,
+                      textColor: Colors.black,
                       width: _cellWidth,
                     ),
                     _buildTableCell(
                       content: 'Bunga',
-                      color: Colors.black,
-                      textColor: Colors.white,
+                      color: Colors.greenAccent,
+                      textColor: Colors.black,
                       width: _cellWidth,
                     ),
                     _buildTableCell(
                       content: 'Total',
-                      color: Colors.black,
-                      textColor: Colors.white,
+                      color: Colors.greenAccent,
+                      textColor: Colors.black,
                       width: _cellWidth,
                     ),
                   ],
@@ -484,22 +530,22 @@ class SimulationDetailScreen extends HookConsumerWidget {
                     return Row(
                       children: [
                         _buildTableCell(
-                          content: '${loan.sisaPinjaman}',
+                          content: loan.sisaPinjaman,
                           width: _cellWidth,
                           color: isEven ? Colors.black12 : Colors.white,
                         ),
                         _buildTableCell(
-                          content: '${loan.angsuranPokok}',
+                          content: loan.angsuranPokok,
                           width: _cellWidth,
                           color: isEven ? Colors.black12 : Colors.white,
                         ),
                         _buildTableCell(
-                          content: '${loan.angsuranBunga}',
+                          content: loan.angsuranBunga,
                           width: _cellWidth,
                           color: isEven ? Colors.black12 : Colors.white,
                         ),
                         _buildTableCell(
-                          content: '${loan.totalAngsuran}',
+                          content: loan.totalAngsuran,
                           width: _cellWidth,
                           color: isEven ? Colors.black12 : Colors.white,
                         ),

@@ -103,7 +103,7 @@ class SimulationDetailController
 class SimulationDetailControllerState with _$SimulationDetailControllerState {
   const factory SimulationDetailControllerState({
     @Default(AsyncLoading()) AsyncValue<UserSingleResponse> userDetail,
-    @Default(AsyncLoading()) AsyncValue<SimulationModel> simulationResult,
+    @Default(null) AsyncValue<SimulationModel>? simulationResult,
     @Default(false) bool simulationLoading,
   }) = _SimulationDetailControllerState;
 }

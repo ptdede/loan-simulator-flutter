@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loan_simulator/router.dart';
 import 'package:loan_simulator/screens/profile/profile_controller.dart';
 import 'package:loan_simulator/screens/profile/widgets/profile_header_delegate.dart';
+import 'package:loan_simulator/widgets/lc_shimmer.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({
@@ -121,7 +122,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             ),
           ],
           error: (error, stackTrace) => [],
-          loading: () => [],
+          loading: () => [
+            Row(
+              children: [
+                Expanded(
+                  child: _buildProfileRowLoading(),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _buildProfileRowLoading(),
+                ),
+              ],
+            ),
+          ],
         ),
         const SizedBox(height: 8),
         state.userLocationAddress.when(
@@ -135,7 +148,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             );
           },
           error: (error, stackTrace) => const SizedBox.shrink(),
-          loading: () => const SizedBox.shrink(),
+          loading: () => _buildProfileRowLoading(),
         ),
       ],
     );
@@ -172,7 +185,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                   .toList(),
             ),
             error: (error, stackTrace) => const SizedBox.shrink(),
-            loading: () => const SizedBox.shrink(),
+            loading: () => _buildProfileRowLoading(),
           ),
         ),
       ),
@@ -181,12 +194,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
   Widget _buildSectionTitle({required String title}) {
     return Container(
-      color: Colors.black87,
+      color: Colors.greenAccent,
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: Text(
         title.toUpperCase(),
         style: const TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),
@@ -207,6 +220,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: _buildBaseInfoRow(title: title, description: description),
+      ),
+    );
+  }
+
+  Widget _buildProfileRowLoading() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      child: LcShimmer(
+        height: 72,
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
     );
   }

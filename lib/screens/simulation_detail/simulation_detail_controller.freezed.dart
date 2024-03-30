@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SimulationDetailControllerState {
   AsyncValue<UserSingleResponse> get userDetail =>
       throw _privateConstructorUsedError;
-  AsyncValue<SimulationModel> get simulationResult =>
+  AsyncValue<SimulationModel>? get simulationResult =>
       throw _privateConstructorUsedError;
   bool get simulationLoading => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $SimulationDetailControllerStateCopyWith<$Res> {
   @useResult
   $Res call(
       {AsyncValue<UserSingleResponse> userDetail,
-      AsyncValue<SimulationModel> simulationResult,
+      AsyncValue<SimulationModel>? simulationResult,
       bool simulationLoading});
 }
 
@@ -56,7 +56,7 @@ class _$SimulationDetailControllerStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? userDetail = null,
-    Object? simulationResult = null,
+    Object? simulationResult = freezed,
     Object? simulationLoading = null,
   }) {
     return _then(_value.copyWith(
@@ -64,10 +64,10 @@ class _$SimulationDetailControllerStateCopyWithImpl<$Res,
           ? _value.userDetail
           : userDetail // ignore: cast_nullable_to_non_nullable
               as AsyncValue<UserSingleResponse>,
-      simulationResult: null == simulationResult
+      simulationResult: freezed == simulationResult
           ? _value.simulationResult
           : simulationResult // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<SimulationModel>,
+              as AsyncValue<SimulationModel>?,
       simulationLoading: null == simulationLoading
           ? _value.simulationLoading
           : simulationLoading // ignore: cast_nullable_to_non_nullable
@@ -87,7 +87,7 @@ abstract class _$$SimulationDetailControllerStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {AsyncValue<UserSingleResponse> userDetail,
-      AsyncValue<SimulationModel> simulationResult,
+      AsyncValue<SimulationModel>? simulationResult,
       bool simulationLoading});
 }
 
@@ -105,7 +105,7 @@ class __$$SimulationDetailControllerStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userDetail = null,
-    Object? simulationResult = null,
+    Object? simulationResult = freezed,
     Object? simulationLoading = null,
   }) {
     return _then(_$SimulationDetailControllerStateImpl(
@@ -113,10 +113,10 @@ class __$$SimulationDetailControllerStateImplCopyWithImpl<$Res>
           ? _value.userDetail
           : userDetail // ignore: cast_nullable_to_non_nullable
               as AsyncValue<UserSingleResponse>,
-      simulationResult: null == simulationResult
+      simulationResult: freezed == simulationResult
           ? _value.simulationResult
           : simulationResult // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<SimulationModel>,
+              as AsyncValue<SimulationModel>?,
       simulationLoading: null == simulationLoading
           ? _value.simulationLoading
           : simulationLoading // ignore: cast_nullable_to_non_nullable
@@ -131,7 +131,7 @@ class _$SimulationDetailControllerStateImpl
     implements _SimulationDetailControllerState {
   const _$SimulationDetailControllerStateImpl(
       {this.userDetail = const AsyncLoading(),
-      this.simulationResult = const AsyncLoading(),
+      this.simulationResult = null,
       this.simulationLoading = false});
 
   @override
@@ -139,7 +139,7 @@ class _$SimulationDetailControllerStateImpl
   final AsyncValue<UserSingleResponse> userDetail;
   @override
   @JsonKey()
-  final AsyncValue<SimulationModel> simulationResult;
+  final AsyncValue<SimulationModel>? simulationResult;
   @override
   @JsonKey()
   final bool simulationLoading;
@@ -179,13 +179,13 @@ abstract class _SimulationDetailControllerState
     implements SimulationDetailControllerState {
   const factory _SimulationDetailControllerState(
       {final AsyncValue<UserSingleResponse> userDetail,
-      final AsyncValue<SimulationModel> simulationResult,
+      final AsyncValue<SimulationModel>? simulationResult,
       final bool simulationLoading}) = _$SimulationDetailControllerStateImpl;
 
   @override
   AsyncValue<UserSingleResponse> get userDetail;
   @override
-  AsyncValue<SimulationModel> get simulationResult;
+  AsyncValue<SimulationModel>? get simulationResult;
   @override
   bool get simulationLoading;
   @override

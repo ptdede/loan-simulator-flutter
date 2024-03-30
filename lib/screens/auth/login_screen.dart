@@ -31,7 +31,7 @@ class LoginScreen extends HookConsumerWidget {
         ), (previous, next) {
       if (!next.isLoading && next.isLoginSuccess) {
         final snackBar = SnackBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.green,
           content: Text('Login success! token = ${next.token}'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -58,27 +58,12 @@ class LoginScreen extends HookConsumerWidget {
     final passwordFieldController = useTextEditingController(text: '');
     final isHidePassword = useState(true);
 
-    final state = ref.watch(
-      AuthController.provider.select(
-        (value) => (
-          email: value.email,
-          password: value.password,
-        ),
-      ),
-    );
-
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ref.read(AuthController.provider.notifier).onScreenLoaded();
       });
       return null;
     }, []);
-
-    useEffect(() {
-      emailFieldController.text = state.email;
-      passwordFieldController.text = state.password;
-      return null;
-    }, [state]);
 
     return Scaffold(
       body: Padding(
@@ -210,7 +195,7 @@ class LoginScreen extends HookConsumerWidget {
               },
             text: 'Signup Here',
             style: const TextStyle(
-              color: Colors.blue,
+              color: Colors.green,
               fontWeight: FontWeight.bold,
             ),
           ),

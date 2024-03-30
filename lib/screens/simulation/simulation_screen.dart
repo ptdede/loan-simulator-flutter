@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loan_simulator/screens/simulation/simulation_controller.dart';
 import 'package:loan_simulator/screens/simulation/widgets/simulation_user_row.dart';
+import 'package:loan_simulator/widgets/lc_shimmer.dart';
 
 class SimulationScreen extends HookConsumerWidget {
   const SimulationScreen({
@@ -32,12 +33,30 @@ class SimulationScreen extends HookConsumerWidget {
               expandedHeight: 150.0,
               backgroundColor: Colors.black,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text('Select User'),
+                title: Text(
+                  'All Customer',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
               ),
               floating: true,
               pinned: true,
             ),
-          )
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              color: Colors.greenAccent,
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+              child: const Row(
+                children: [
+                  Icon(Icons.info_outline_rounded),
+                  SizedBox(width: 8),
+                  Text('Choose a customer to see loan calculation')
+                ],
+              ),
+            ),
+          ),
         ],
         body: _buildProfiles(),
       ),
@@ -76,9 +95,67 @@ class SimulationScreen extends HookConsumerWidget {
             ),
           ),
           error: (error, stackTrace) => const SizedBox.shrink(),
-          loading: () => const SizedBox.shrink(),
+          loading: () => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 62),
+              _buildLoading(context),
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 12),
+              _buildLoading(context),
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 12),
+              _buildLoading(context),
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 12),
+              _buildLoading(context),
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 12),
+              _buildLoading(context),
+            ],
+          ),
         );
       },
+    );
+  }
+
+  Widget _buildLoading(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              LcShimmer(
+                height: 64,
+                width: 64,
+                borderRadius: BorderRadius.circular(64),
+              ),
+              const SizedBox(width: 32),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LcShimmer(
+                    height: 16,
+                    width: MediaQuery.of(context).size.width / 2.7,
+                  ),
+                  const SizedBox(height: 12),
+                  LcShimmer(
+                    height: 16,
+                    width: MediaQuery.of(context).size.width / 2,
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

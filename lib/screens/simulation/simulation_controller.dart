@@ -29,6 +29,8 @@ class SimulationController extends StateNotifier<SimulationControllerState> {
       () => _userRepository.getUserList(page: page),
     );
 
+    if (!mounted) return;
+
     if (result is AsyncData) {
       state = state.copyWith(userList: result);
     }

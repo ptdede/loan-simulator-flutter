@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loan_simulator/data/models/user_data.dart';
+import 'package:loan_simulator/widgets/lc_shimmer.dart';
 
 class ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
   ProfileHeaderDelegate({
@@ -60,7 +61,25 @@ class ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
                 )
               : const SizedBox.expand(),
           error: (error, stackTrace) => const SizedBox.expand(),
-          loading: () => const SizedBox.expand(),
+          loading: () => Column(
+            children: [
+              LcShimmer(
+                height: 128,
+                width: 128,
+                borderRadius: BorderRadius.circular(128),
+              ),
+              const SizedBox(height: 12),
+              LcShimmer(
+                height: 20,
+                width: MediaQuery.of(context).size.width / 2,
+              ),
+              const SizedBox(height: 12),
+              LcShimmer(
+                height: 20,
+                width: MediaQuery.of(context).size.width / 1.2,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -77,9 +96,9 @@ class ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
         alignment: Alignment.center,
         children: [
           AnimatedPositioned(
-            top: 0,
+            top: lerpDouble(12, 0, scrollProgress),
             left: lerpDouble(
-                MediaQuery.of(context).size.width / 2 - 88, 0, scrollProgress),
+                MediaQuery.of(context).size.width / 2 - 88, 12, scrollProgress),
             duration: Duration.zero,
             curve: Curves.linear,
             child: CachedNetworkImage(

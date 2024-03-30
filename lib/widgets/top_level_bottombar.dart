@@ -121,7 +121,7 @@ class GenerateBottombar extends StatelessWidget {
       children: TopLevelBottombarTab.values.map((tab) {
         switch (tab) {
           case TopLevelBottombarTab.home:
-            return HomepageScreen();
+            return const HomepageScreen();
           case TopLevelBottombarTab.profile:
             return const ProfileScreen();
         }
