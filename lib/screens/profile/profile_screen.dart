@@ -35,7 +35,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     ));
 
     return Scaffold(
-      backgroundColor: Colors.white70,
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverPersistentHeader(
