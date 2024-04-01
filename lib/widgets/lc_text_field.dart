@@ -14,6 +14,8 @@ class LcTextField extends HookWidget {
     this.validator,
     this.onChanged,
     this.inputFormatters,
+    this.onFieldSubmitted,
+    this.onEditingComplete,
     this.autocorrect = true,
     this.enableSuggestions = true,
     this.obscureText = false,
@@ -30,6 +32,8 @@ class LcTextField extends HookWidget {
     this.validator,
     this.onChanged,
     this.inputFormatters,
+    this.onFieldSubmitted,
+    this.onEditingComplete,
     this.autocorrect = false,
     this.enableSuggestions = false,
     this.obscureText = true,
@@ -46,6 +50,8 @@ class LcTextField extends HookWidget {
     this.validator,
     this.onChanged,
     this.inputFormatters,
+    this.onFieldSubmitted,
+    this.onEditingComplete,
     this.autocorrect = false,
     this.enableSuggestions = false,
     this.obscureText = false,
@@ -63,6 +69,8 @@ class LcTextField extends HookWidget {
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onChanged;
   final List<TextInputFormatter>? inputFormatters;
+  final ValueChanged<String>? onFieldSubmitted;
+  final VoidCallback? onEditingComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +113,9 @@ class LcTextField extends HookWidget {
                   enableSuggestions: enableSuggestions,
                   obscureText: obscureText,
                   onChanged: onChanged,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: onFieldSubmitted,
+                  onEditingComplete: onEditingComplete,
                 ),
               ),
             ],

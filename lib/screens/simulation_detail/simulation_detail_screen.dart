@@ -190,6 +190,7 @@ class SimulationDetailScreen extends HookConsumerWidget {
                   controller: amountFieldController,
                   label: 'Amount',
                   inputType: TextInputType.number,
+                  placeholder: 'ex: 10.000.000',
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     ThousandsFormatter(),
@@ -206,6 +207,7 @@ class SimulationDetailScreen extends HookConsumerWidget {
                   controller: tenorFieldController,
                   label: 'Tenor (months)',
                   inputType: TextInputType.number,
+                  placeholder: 'ex: 24',
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -218,6 +220,7 @@ class SimulationDetailScreen extends HookConsumerWidget {
                 LcTextField(
                   controller: rateFieldController,
                   label: 'Rate (per year)',
+                  placeholder: 'ex: 12.4',
                   inputType:
                       const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [

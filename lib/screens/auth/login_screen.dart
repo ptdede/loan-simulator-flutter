@@ -50,6 +50,12 @@ class LoginScreen extends HookConsumerWidget {
     });
   }
 
+  void login(BuildContext context, WidgetRef ref) {
+    if (_formKey.currentState!.validate()) {
+      ref.read(AuthController.provider.notifier).onLoginUser();
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _listenLoginState(context, ref);
@@ -152,16 +158,11 @@ class LoginScreen extends HookConsumerWidget {
 
                         return null;
                       },
+                      onEditingComplete: () => login(context, ref),
                     ),
                     const SizedBox(height: 16),
                     LcButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          ref
-                              .read(AuthController.provider.notifier)
-                              .onLoginUser();
-                        }
-                      },
+                      onPressed: () => login(context, ref),
                       isLoading: ref.watch(
                         AuthController.provider
                             .select((value) => value.isLoading),
